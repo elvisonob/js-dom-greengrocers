@@ -58,7 +58,6 @@ function render() {
     clear()
     renderStore()
     renderCart()
-        //after line 57, we want to clear the existing item list and the cart
 }
 
 function clear() {
@@ -122,23 +121,38 @@ function renderCartItem(item) {
     const removeButton = document.createElement('button')
     removeButton.setAttribute('class', 'quantity-btn remove-btn center')
     removeButton.innerText = '-'
+    removeButton.addEventListener('click', function() {
+        item.quantity--
+            if (item.quantity === 0) {
+                state.cart = state.cart.filter(item => item.quantity > 0)
+            }
+
+        render()
+
+
+        //2. Render the DOM
+
+
+
+
+
+    })
     const span = document.createElement('span')
     span.setAttribute('class', "quantity-text center")
     span.innerText = item.quantity
     const addButton = document.createElement('button')
-        //add an event listener for the addbutton, when button is clicked, i want to update the quantity of the item in the cart. and then call my render function
     addButton.setAttribute('class', 'quantity-btn add-btn center')
     addButton.innerText = '+'
+        //add an event listener for the addbutton, when button is clicked, i want to update the quantity of the item in the cart. and then call my render function
+    addButton.addEventListener('click', function() {
+        item.quantity++
+            render()
+    })
+
+
     cart.append(li)
     li.append(img, p, removeButton, span, addButton)
 
-    addButton.addEventListener('click', function() {
-        for (let i = 0; i < state.items.length; i++) {
-            state.cart.push(state.items[i].price)
-
-        }
-
-    })
 
 }
 
