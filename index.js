@@ -53,8 +53,30 @@ const state = {
     cart: []
 };
 
+
+function render() {
+    clear()
+    renderStore()
+    renderCart()
+        //after line 57, we want to clear the existing item list and the cart
+}
+
+function clear() {
+    //Removing all the li items from the items list ul
+    showTheFruits.innerHTML = ''
+        //Removing all the li items from the order list ul
+    cart.innerHTML = ''
+}
+
 const Add = 'Add to Cart'
 const showTheFruits = document.querySelector('ul')
+
+function renderCart() {
+    for (let i = 0; i < state.cart.length; i++) {
+        const cartItem = state.cart[i]
+        renderCartItem(cartItem)
+    }
+}
 
 function renderStore() {
     for (let i = 0; i < state.items.length; i++) {
@@ -71,43 +93,59 @@ function renderStore() {
         li.append(button)
         button.innerText = Add
         button.addEventListener('click', function() {
-            state.cart.push(state.items[i])
-            renderCart(state.items[i])
+            const cartItem = {
+                item: state.items[i],
+                quantity: 1
+            }
+
+            state.cart.push(cartItem)
+
+            render()
         })
 
     }
 
 }
-console.log(state.cart)
+
 renderStore()
 const cart = document.querySelector('.cart--item-list')
 
-function renderCart(item) {
-
+function renderCartItem(item) {
+    console.log(item)
     const li = document.createElement('li')
     const img = document.createElement('img')
-    img.src = `assets/icons/${item.id}.svg`
-    img.alt = `${item.name}`
+    img.src = `assets/icons/${item.item.id}.svg`
+    img.alt = `${item.item.name}`
     img.setAttribute('class', "cart--item-icon")
     const p = document.createElement('p')
-    p.innerText = `${item.name}`
+    p.innerText = `${item.item.name}`
     const removeButton = document.createElement('button')
     removeButton.setAttribute('class', 'quantity-btn remove-btn center')
     removeButton.innerText = '-'
     const span = document.createElement('span')
     span.setAttribute('class', "quantity-text center")
-    span.innerText = '1'
+    span.innerText = item.quantity
     const addButton = document.createElement('button')
+        //add an event listener for the addbutton, when button is clicked, i want to update the quantity of the item in the cart. and then call my render function
     addButton.setAttribute('class', 'quantity-btn add-btn center')
     addButton.innerText = '+'
     cart.append(li)
     li.append(img, p, removeButton, span, addButton)
 
+    addButton.addEventListener('click', function() {
+        for (let i = 0; i < state.items.length; i++) {
+            state.cart.push(state.items[i].price)
 
+        }
+
+    })
 
 }
 
+
 //renderCart()
+
+
 
 
 
