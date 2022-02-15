@@ -74,6 +74,8 @@ function renderCart() {
     for (let i = 0; i < state.cart.length; i++) {
         const cartItem = state.cart[i]
         renderCartItem(cartItem)
+        calculateTotal()
+
     }
 }
 
@@ -100,6 +102,7 @@ function renderStore() {
             state.cart.push(cartItem)
 
             render()
+
         })
 
     }
@@ -129,14 +132,8 @@ function renderCartItem(item) {
 
         render()
 
-
-        //2. Render the DOM
-
-
-
-
-
     })
+
     const span = document.createElement('span')
     span.setAttribute('class', "quantity-text center")
     span.innerText = item.quantity
@@ -158,6 +155,19 @@ function renderCartItem(item) {
 
 
 //renderCart()
+
+
+
+const cartTotal = document.querySelector('#totalNumber')
+
+
+function calculateTotal() {
+    let total = 0
+    for (let i = 0; i < state.cart.length; i++) {
+        total = total + state.cart[i].price
+        cartTotal.innerText = total
+    }
+}
 
 
 
