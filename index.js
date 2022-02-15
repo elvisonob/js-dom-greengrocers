@@ -96,10 +96,13 @@ function renderStore() {
         button.addEventListener('click', function() {
             const cartItem = {
                 item: state.items[i],
-                quantity: 1
+                quantity: 1,
+                price: 0.35
             }
 
+
             state.cart.push(cartItem)
+
 
             render()
 
@@ -164,10 +167,13 @@ const cartTotal = document.querySelector('#totalNumber')
 function calculateTotal() {
     let total = 0
     for (let i = 0; i < state.cart.length; i++) {
-        total = total + state.cart[i].price
+        total = total + state.cart[i].quantity * state.cart[i].price
         cartTotal.innerText = total
     }
 }
+
+
+
 
 
 
